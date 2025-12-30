@@ -1,0 +1,84 @@
+Nmap parameters/flags/switches and their functions:
+
+Scan Types (-s)
+-sS (TCP SYN scan): Most popular and stealthy. Sends SYN packets without completing the connection
+-sT (TCP connect scan): Completes TCP connection. More detectable but doesn't require privileges
+-sU (UDP scan): Scans UDP ports (slower)
+-sA (ACK scan): Detects firewalls and filtering rules
+-sN/-sF/-sX (Null, FIN, Xmas scans): Stealth techniques to evade firewalls
+-sV (Version detection): Detects service versions on open ports
+-sC (Script scan): Runs default NSE scripts
+
+
+Host Discovery (-sn, -P)
+-sn (Ping scan): Only discovers active hosts, doesn't scan ports
+-Pn (No ping): Assumes host is up, useful if it blocks ping
+-PS/PA/PU (TCP SYN/ACK/UDP ping): Different ping methods
+-PE/PP/PM (ICMP ping): Echo, timestamp, netmask request
+
+
+Port Specification (-p)
+-p 80 (Specific port)
+-p 1-100 (Port range)
+-p- (All 65535 ports)
+-p http,https (By service name)
+--top-ports 100 (The 100 most common ports)
+
+
+Timing and Performance (-T)
+-T0 (Paranoid): Extremely slow, for IDS evasion
+-T1 (Sneaky): Very slow
+-T2 (Polite): Slow, less aggressive with the network
+-T3 (Normal): Default speed
+-T4 (Aggressive): Faster, assumes reliable network
+-T5 (Insane): Extremely fast, may lose accuracy
+
+
+OS and Service Detection
+-O (OS detection): Detects operating system
+-A (Aggressive scan): Combines -O, -sV, -sC and traceroute
+--osscan-guess: Guesses OS more aggressively
+
+
+Output (-o)
+-oN file.txt (Normal output)
+-oX file.xml (XML output)
+-oG file.grep (Grepable output)
+-oA name (Saves in all 3 formats)
+-v/-vv (Verbose): More information during scan
+
+
+Evasion and Stealth
+-f (Fragment packets): Fragments packets to evade firewalls
+-D (Decoy): Uses decoy IPs to hide your real IP
+-S (Spoof source): Spoofs source IP
+--randomize-hosts: Scans targets in random order
+--data-length: Adds random data to evade detection
+
+
+NSE Scripts (--script)
+--script vuln: Searches for known vulnerabilities
+--script default: Safe and useful scripts
+--script auth: Authentication scripts
+--script discovery: Discovery scripts
+
+
+Practical Examples
+
+# Complete and aggressive scan
+nmap -A -T4 192.168.1.1
+
+# Stealthy scan of common ports
+nmap -sS --top-ports 1000 -T2 192.168.1.1
+
+# Detect services and versions
+nmap -sV -p 80,443,8080 192.168.1.1
+
+# Network-wide scan without ports
+nmap -sn 192.168.1.0/24
+
+# Search for vulnerabilities
+nmap --script vuln -p 80,443 192.168.1.1
+
+# Save results
+nmap -sS -oA my_scan 192.168.1.1
