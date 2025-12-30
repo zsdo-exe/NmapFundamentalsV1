@@ -1,0 +1,62 @@
+This is the beginning of my version for learning NMAP
+
+First: Install Subversion (svn)
+
+- sudo apt update
+- sudo apt install subversion
+
+Verify that it was installed:
+- svn --version   (Example svn, version 1.14.x)
+
+Download the Nmap source code
+
+- cd ~
+- svn co https://svn.nmap.org/nmap
+
+The command svn co(or svn checkout) downloads the entire repository.
+
+Compile and Install
+Once downloaded, go into the folder and compete:
+
+- cd nmap
+- ./configure
+- make -j4
+- sudo make install
+
+BUT WAIT... Do you really need to compile it? 
+Kali Linux comes with Nmap already installed and updated.
+
+- y
+nmap --version
+If you already have Nmap 7.9x+, you do NOT need to compile unless:
+
+You want the latest development version
+You want to contribute to the project
+You need experimental characteristics
+Simply update Nmap using your package manager:
+
+- sudo apt update
+- sudo apt upgrade nmap
+- nmap --version
+
+Okay, are you ready for the first analysis?
+
+- nmap -sn 192.168.1.0/24
+
+Ping scans to see which machines are turned on  
+(Nmap scan report for 192.168.1.254 Host is up (0.000017s latency).)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
